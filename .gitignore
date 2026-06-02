@@ -1,0 +1,27 @@
+# IntelliJ
+.idea/
+*.iml
+
+# Java
+backend/target/
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# Logs
+*.log
+*.err
+
+# OS
+.DS_Store
+Thumbs.db
+
+# H2 runtime data
+backend/data/
+
+# Docker
+.docker/
+
+# Generated archives
+*.zip

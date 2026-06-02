@@ -1,0 +1,42 @@
+{
+  "source": "OpenStreetMap via Overpass API",
+  "overpassUrl": "https://overpass-api.de/api/interpreter",
+  "totalCollected": 3015,
+  "totalCleanedBeforeDedupe": 2735,
+  "totalCleaned": 2716,
+  "totalDeduplicated": 19,
+  "districtBoundaryPolygons": 18,
+  "districtCoveragePercent": 100.0,
+  "recordsWithAddress": 1687,
+  "recordsWithPhone": 602,
+  "recordsWithWebsite": 391,
+  "recordsWithRating": 0,
+  "recordsWithCoordinates": 2716,
+  "recordsMissingName": 0,
+  "districtCounts": {
+    "Bemowo": 52,
+    "Białołęka": 90,
+    "Bielany": 58,
+    "Mokotów": 379,
+    "Ochota": 87,
+    "Praga-Południe": 205,
+    "Praga-Północ": 80,
+    "Rembertów": 68,
+    "Targówek": 111,
+    "Ursus": 120,
+    "Ursynów": 311,
+    "Wawer": 68,
+    "Wesoła": 8,
+    "Wilanów": 61,
+    "Wola": 423,
+    "Włochy": 63,
+    "Śródmieście": 450,
+    "Żoliborz": 82
+  },
+  "files": {
+    "rawSalons": "data\\raw\\salons_raw.json",
+    "rawDistricts": "data\\raw\\district_boundaries_raw.json",
+    "cleanJson": "data\\processed\\salons_clean.json",
+    "cleanCsv": "data\\processed\\salons_clean.csv"
+  }
+}
