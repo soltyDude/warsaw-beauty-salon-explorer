@@ -1,6 +1,10 @@
 import { MapPin, Star } from "lucide-react";
 import type { SalonListItem } from "../types/salon";
-import { displayRating, displayValue } from "../utils/format";
+import {
+  displayRating,
+  displayValue,
+  getCompletenessScore
+} from "../utils/format";
 
 interface SalonListProps {
   salons: SalonListItem[];
@@ -25,6 +29,10 @@ export default function SalonList({ salons, selectedId, onSelect }: SalonListPro
           >
             <span className="salon-row-main">
               <strong>{salon.name}</strong>
+
+              <span className="completeness-badge">
+                {getCompletenessScore(salon)}/6 fields
+              </span>
 
               {salon.services ? (
                 <span className="service-tag">

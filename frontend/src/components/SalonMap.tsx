@@ -1,11 +1,5 @@
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import type { SalonDetail, SalonListItem } from "../types/salon";
-
-const BOUNDS = {
-  south: 52.097,
-  west: 20.851,
-  north: 52.368,
-  east: 21.271
-};
 
 interface SalonMapProps {
   salons: SalonListItem[];
@@ -13,52 +7,56 @@ interface SalonMapProps {
   onSelect: (id: number) => void;
 }
 
-export default function SalonMap({ salons, detail, onSelect }: SalonMapProps) {
-  const visible = salons.slice(0, 260);
+const WARSAW_CENTER: [number, number] = [52.2297, 21.0122];
+
+export default function SalonMap({
+  salons,
+  detail,
+  onSelect
+}: SalonMapProps) {
+  const visible = salons
+    .filter(
+      (salon) =>
+        salon.latitude !== null &&
+        salon.longitude !== null
+    )
+    .slice(0, 500);
 
   return (
-    <div className="map-panel" aria-label="Salon coordinate plot">
-      <div className="map-grid" />
-      {visible.map((salon) => {
-        const active = salon.id === detail?.id;
-        const position = positionFromSalon(active && detail ? detail : salon);
-        if (!position) {
-          return null;
-        }
-        return (
-          <button
+    <div className="map-panel">
+      <MapContainer
+        center={WARSAW_CENTER}
+        zoom={11}
+        scrollWheelZoom
+        style={{
+          height: "100%",
+          width: "100%"
+        }}
+      >
+        <TileLayer
+          attribution="&copy; OpenStreetMap contributors"
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+
+        {visible.map((salon) => (
+          <Marker
             key={salon.id}
-            className={`map-pin ${active ? "is-active" : ""}`}
-            style={{ left: `${position.x}%`, top: `${position.y}%` }}
-            type="button"
-            title={salon.name}
-            onClick={() => onSelect(salon.id)}
-          />
-        );
-      })}
-      {detail && positionFromSalon(detail) ? (
-        <div
-          className="map-label"
-          style={{
-            left: `${positionFromSalon(detail)!.x}%`,
-            top: `${positionFromSalon(detail)!.y}%`
-          }}
-        >
-          {detail.district ?? "Unknown"}
-        </div>
-      ) : null}
+            position={[
+              salon.latitude!,
+              salon.longitude!
+            ]}
+            eventHandlers={{
+              click: () => onSelect(salon.id)
+            }}
+          >
+            <Popup>
+              <strong>{salon.name}</strong>
+              <br />
+              {salon.district}
+            </Popup>
+          </Marker>
+        ))}
+      </MapContainer>
     </div>
   );
-}
-
-function positionFromSalon(salon: Pick<SalonDetail, "latitude" | "longitude"> | null) {
-  if (!salon || salon.latitude === null || salon.longitude === null) {
-    return null;
-  }
-  const x = ((salon.longitude - BOUNDS.west) / (BOUNDS.east - BOUNDS.west)) * 100;
-  const y = 100 - ((salon.latitude - BOUNDS.south) / (BOUNDS.north - BOUNDS.south)) * 100;
-  return {
-    x: Math.min(98, Math.max(2, x)),
-    y: Math.min(98, Math.max(2, y))
-  };
 }
