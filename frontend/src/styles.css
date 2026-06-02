@@ -249,55 +249,18 @@ h2 {
 
 .map-panel {
   aspect-ratio: 16 / 5;
-  background:
-    linear-gradient(90deg, rgba(29, 118, 111, 0.12) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(29, 118, 111, 0.12) 1px, transparent 1px), #eef3eb;
-  background-size: 12.5% 25%;
   overflow: hidden;
   position: relative;
-}
-
-.map-grid {
-  border: 1px solid rgba(32, 53, 47, 0.18);
+  border: 1px solid #d7ddd6;
   border-radius: 8px;
-  inset: 14px;
-  position: absolute;
 }
 
-.map-pin {
-  background: #1d766f;
-  border: 2px solid #ffffff;
-  border-radius: 999px;
-  box-shadow: 0 2px 8px rgba(24, 35, 31, 0.18);
-  height: 10px;
-  padding: 0;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  width: 10px;
+.map-panel .leaflet-container {
+  height: 100%;
+  width: 100%;
 }
 
-.map-pin.is-active {
-  background: #e85d4f;
-  height: 18px;
-  width: 18px;
-  z-index: 2;
-}
 
-.map-label {
-  background: #20352f;
-  border-radius: 8px;
-  color: #ffffff;
-  font-size: 0.78rem;
-  font-weight: 800;
-  max-width: 150px;
-  overflow: hidden;
-  padding: 5px 8px;
-  position: absolute;
-  text-overflow: ellipsis;
-  transform: translate(12px, -50%);
-  white-space: nowrap;
-  z-index: 3;
-}
 
 .detail-panel {
   min-height: 386px;
@@ -512,4 +475,12 @@ h2 {
   }
 }
 
-
+.completeness-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  background: #eef3eb;
+  color: #20352f;
+}
