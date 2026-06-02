@@ -16,7 +16,7 @@ All 18 official Warsaw districts covered. Dataset collected from OpenStreetMap â
 
 ---
 
-## Screenshots
+## Screenshot
 
 <img width="1561" height="972" alt="image" src="https://github.com/user-attachments/assets/4cef0362-b265-425a-a31e-5dd8fceb1cf4" />
 
