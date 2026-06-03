@@ -35,12 +35,13 @@ export default function SalonExplorerPage() {
 const getCompletenessScore = (salon: SalonListItem) => {
   let score = 0;
 
-  if (salon.address) score++;
   if (salon.phone) score++;
   if (salon.website) score++;
   if (salon.services) score++;
   if (salon.rating !== null) score++;
   if (salon.reviewsCount !== null) score++;
+  if (salon.openingHours) score++;
+  if (salon.priceRange && salon.priceRange !== "Unknown") score++;
 
   return score;
 };
