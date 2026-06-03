@@ -7,6 +7,10 @@ export interface SalonListItem {
   services: string | null;
   latitude: number | null;
   longitude: number | null;
+  phone: string | null;
+  website: string | null;
+  reviewsCount: number | null;
+  openingHours: string | null;
 }
 
 export interface SalonDetail extends SalonListItem {

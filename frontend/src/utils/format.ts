@@ -18,6 +18,10 @@ export function getCompletenessScore(salon: {
   rating: number | null;
   priceRange: string | null;
   services: string | null;
+  phone: string | null;
+  website: string | null;
+  reviewsCount: number | null;
+  openingHours: string | null;
   latitude: number | null;
   longitude: number | null;
 }) {
@@ -27,6 +31,10 @@ export function getCompletenessScore(salon: {
   if (salon.rating !== null) score++;
   if (salon.priceRange && salon.priceRange !== "Unknown") score++;
   if (salon.services) score++;
+  if (salon.phone) score++;
+  if (salon.website) score++;
+  if (salon.reviewsCount !== null) score++;
+  if (salon.openingHours) score++;
   if (salon.latitude !== null) score++;
   if (salon.longitude !== null) score++;
 

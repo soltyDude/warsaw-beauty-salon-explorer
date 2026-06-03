@@ -31,7 +31,7 @@ export default function SalonList({ salons, selectedId, onSelect }: SalonListPro
               <strong>{salon.name}</strong>
 
               <span className="completeness-badge">
-                {getCompletenessScore(salon)}/6 fields
+                {getCompletenessScore(salon)}/10 filled
               </span>
 
               {salon.services ? (
