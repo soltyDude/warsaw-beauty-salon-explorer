@@ -13,6 +13,10 @@ final class SalonMapper {
                 salon.getRating(),
                 salon.getPriceRange(),
                 salon.getServices(),
+                salon.getPhone(),
+                salon.getWebsite(),
+                salon.getReviewsCount(),
+                salon.getOpeningHours(),
                 salon.getLatitude(),
                 salon.getLongitude()
         );
