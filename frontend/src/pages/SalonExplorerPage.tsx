@@ -1,10 +1,19 @@
+
 import { RefreshCw, Search, X } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { fetchDistricts, fetchSalonDetail, fetchSalons,fetchStats, updateSalon } from "../api/salons";
+import {
+  fetchDistricts,
+  fetchSalonDetail,
+  fetchSalons,
+  fetchStats,
+  updateSalon
+} from "../api/salons";
 import SalonDetailPanel from "../components/SalonDetail";
 import SalonList from "../components/SalonList";
 import SalonMap from "../components/SalonMap";
 import type { SalonDetail, SalonListItem, SalonUpdatePayload, SalonStats} from "../types/salon";
+
+
 
 export default function SalonExplorerPage() {
   const [salons, setSalons] = useState<SalonListItem[]>([]);
@@ -22,6 +31,19 @@ export default function SalonExplorerPage() {
   const [listError, setListError] = useState<string | null>(null);
   const [detailError, setDetailError] = useState<string | null>(null);
   const [saveMessage, setSaveMessage] = useState<string | null>(null);
+
+const getCompletenessScore = (salon: SalonListItem) => {
+  let score = 0;
+
+  if (salon.address) score++;
+  if (salon.phone) score++;
+  if (salon.website) score++;
+  if (salon.services) score++;
+  if (salon.rating !== null) score++;
+  if (salon.reviewsCount !== null) score++;
+
+  return score;
+};
 
   const loadList = useCallback(async () => {
     setListLoading(true);
@@ -68,6 +90,12 @@ export default function SalonExplorerPage() {
 
         case "district":
           return (a.district ?? "").localeCompare(b.district ?? "");
+
+        case "completenessDesc":
+          return getCompletenessScore(b) - getCompletenessScore(a);
+
+        case "completenessAsc":
+          return getCompletenessScore(a) - getCompletenessScore(b);
 
         default:
           return a.name.localeCompare(b.name);
@@ -152,7 +180,11 @@ export default function SalonExplorerPage() {
                 priceRange: updated.priceRange,
                 services: updated.services,
                 latitude: updated.latitude,
-                longitude: updated.longitude
+                longitude: updated.longitude,
+                phone: updated.phone,
+                website: updated.website,
+                reviewsCount: updated.reviewsCount,
+                openingHours: updated.openingHours,
               }
             : salon
         )
@@ -261,6 +293,8 @@ export default function SalonExplorerPage() {
             <option value="nameAsc">Name A-Z</option>
             <option value="nameDesc">Name Z-A</option>
             <option value="district">District</option>
+            <option value="completenessDesc">Most complete first</option>
+            <option value="completenessAsc">Least complete first</option>
           </select>
         </label>
 
