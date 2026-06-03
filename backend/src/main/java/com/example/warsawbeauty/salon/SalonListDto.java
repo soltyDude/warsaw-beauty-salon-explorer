@@ -7,6 +7,10 @@ public record SalonListDto(
         Double rating,
         String priceRange,
         String services,
+        String phone,
+        String website,
+        Integer reviewsCount,
+        String openingHours,
         Double latitude,
         Double longitude
 ) {
