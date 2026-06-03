@@ -340,8 +340,4 @@ Already in progress (see [In Progress](#in-progress-google-places-enrichment) se
 
 Docker Compose is already in place — Railway reads it directly.
 
----
 
-## Author
-
-Built for the SumUp Warsaw Accelerator Program — Software Engineer Intern recruitment assignment.
