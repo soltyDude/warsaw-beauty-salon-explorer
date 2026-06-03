@@ -1,122 +1,173 @@
 # Warsaw Beauty Salon Explorer
 
-A full-stack application for discovering beauty and hair salons in Warsaw — built as a home assignment for the SumUp Warsaw Accelerator Program.
+## Live Demo
 
-Covers the complete pipeline: data collection → cleaning → backend API → frontend UI → map visualization → containerized deployment.
+Frontend: https://warsaw-beauty-salon-explorer-beta.vercel.app
 
----
-
-## Live Stats
-
-| Salons | Districts | Phone numbers | Websites |
-|:------:|:---------:|:-------------:|:--------:|
-| **2 716** | **18 / 18** | **602** | **391** |
-
-All 18 official Warsaw districts covered. Dataset collected from OpenStreetMap — no mocked or synthetic records.
+Backend API: https://warsaw-beauty-salon-explorer-production.up.railway.app/api/stats
 
 ---
 
-## Screenshot
+## Overview
 
-<img width="1561" height="972" alt="image" src="https://github.com/user-attachments/assets/4cef0362-b265-425a-a31e-5dd8fceb1cf4" />
+Warsaw Beauty Salon Explorer is a full-stack application for discovering beauty salons, hairdressers, barbershops, nail studios, and wellness services across Warsaw.
 
+The project was built as a technical assignment for the SumUp Warsaw Accelerator Program and demonstrates the complete data engineering and software development pipeline:
+
+```text
+Data Collection
+      ↓
+Data Cleaning
+      ↓
+REST API
+      ↓
+Frontend Application
+      ↓
+Interactive Map
+      ↓
+Dockerized Deployment
+      ↓
+Cloud Hosting
+```
+
+The application currently contains 2,716 real businesses collected from OpenStreetMap and distributed across all 18 Warsaw districts.
 
 ---
 
 ## Features
 
-### Data Collection
-- Source: **OpenStreetMap via Overpass API** — free, no API key, community-verified data
-- 2 716 real salons with coordinates, addresses, and service types
-- Automated deduplication and district assignment via geographic coordinates
-- Python pipeline: fetch → clean → normalize → validate → seed
+### Data Collection & Processing
+
+* OpenStreetMap + Overpass API data source
+* 2,716 real beauty-related businesses
+* Geographic district assignment
+* Data normalization and validation
+* Duplicate detection and cleanup
+* Automated import pipeline written in Python
 
 ### Backend API
-- Full salon listing with filtering by district and service
-- Individual salon detail endpoint
-- Manual edits via PATCH with persistence
-- Dataset statistics endpoint
+
+* Spring Boot 3 + Java 21
+* RESTful architecture
+* Salon listing endpoint
+* Filtering by district
+* Filtering by service type
+* Salon detail endpoint
+* Statistics endpoint
+* PATCH updates with persistence
+* Integration tests using MockMvc
 
 ### Frontend
-- Search by name
-- Filter by district and service type
-- Sortable results
-- Interactive OpenStreetMap (Leaflet) with salon pins
-- Salon detail view
-- Inline editing with save to backend
-- Statistics dashboard
 
-> **Map note:** The map renders up to **500 pins** by default for smooth performance with Leaflet. This limit is configurable in `frontend/src/components/SalonMap.tsx` (`.slice(0, 500)`). Raising it is possible but for datasets above ~1 000 visible markers, replacing individual `<Marker>` components with [Leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster) gives a significantly better UX — clusters collapse at lower zoom levels and expand on click.
+* React 18 + TypeScript
+* Search by salon name
+* District filtering
+* Service filtering
+* Sorting options
+* Statistics dashboard
+* Editable salon details
+* Responsive layout
+* Interactive Leaflet map
 
 ### Infrastructure
-- Dockerized — single `docker compose up` to run the full stack
+
+* Dockerized backend
+* Dockerized frontend
+* Docker Compose support
+* GitHub repository
+* Railway deployment
+* Vercel deployment
+* Automatic cloud builds
+
+---
+
+## Live Dataset Statistics
+
+| Metric              | Value   |
+| ------------------- | ------- |
+| Total salons        | 2,716   |
+| Districts covered   | 18 / 18 |
+| Phone numbers       | 602     |
+| Websites            | 391     |
+| Services classified | 2,716   |
 
 ---
 
 ## Architecture
 
-```
+```text
 OpenStreetMap (Overpass API)
             │
             ▼
    Python Data Pipeline
-   fetch → clean → normalize → validate
+   fetch → clean → normalize
             │
             ▼
-    salons_final.json (2 716 records)
+    salons_clean.json
             │
             ▼
- Spring Boot 3 — REST API (port 8080)
- H2 in-memory DB, seeded on startup
+ Spring Boot REST API
             │
             ▼
- React + TypeScript Frontend (port 5173)
- Vite, Leaflet, Lucide Icons
+ React + TypeScript
+            │
+            ▼
+ Leaflet + OpenStreetMap
 ```
 
 ---
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Backend | Java 21, Spring Boot 3, Spring Data JPA |
-| Database | H2 (in-memory, seeded from JSON) |
-| Frontend | React 18, TypeScript, Vite |
-| Map | Leaflet.js + OpenStreetMap tiles |
-| Data pipeline | Python 3, Overpass API |
-| Infrastructure | Docker, Docker Compose |
-| Build | Maven |
+| Layer           | Technology             |
+| --------------- | ---------------------- |
+| Backend         | Java 21, Spring Boot 3 |
+| Persistence     | H2 Database            |
+| Frontend        | React 18, TypeScript   |
+| Build Tool      | Maven                  |
+| Frontend Build  | Vite                   |
+| Maps            | Leaflet                |
+| Data Collection | Python                 |
+| Data Source     | OpenStreetMap          |
+| Deployment      | Railway + Vercel       |
+| Containers      | Docker, Docker Compose |
 
 ---
 
-## Quick Start
+## Running Locally
 
-### Option A — Docker (recommended)
+### Docker
 
 ```bash
 docker compose build
 docker compose up
 ```
 
-| Service | URL |
-|---------|-----|
-| Frontend | http://localhost:5173 |
-| Backend API | http://localhost:8080 |
+Frontend:
+
+```text
+http://localhost:5173
+```
+
+Backend:
+
+```text
+http://localhost:8080
+```
 
 ---
 
-### Option B — Local
+### Without Docker
 
-**Prerequisites:** Java 21+, Maven 3.8+, Node.js 18+
+Backend:
 
-**Backend:**
 ```bash
 cd backend
 mvn spring-boot:run
 ```
 
-**Frontend:**
+Frontend:
+
 ```bash
 cd frontend
 npm install
@@ -125,219 +176,169 @@ npm run dev
 
 ---
 
-## API Reference
+## API Endpoints
 
-```
-GET   /api/salons          List all salons (supports ?district=X&service=Y)
-GET   /api/salons/{id}     Full salon details
-PATCH /api/salons/{id}     Update salon fields
-GET   /api/stats           Dataset statistics and coverage metrics
+```http
+GET    /api/salons
+GET    /api/salons/{id}
+PATCH  /api/salons/{id}
+GET    /api/stats
+GET    /api/districts
 ```
 
-**Example — filter by district:**
+Example:
+
 ```bash
-curl "http://localhost:8080/api/salons?district=Mokotów"
-```
-
-**Example — update a record:**
-```bash
-curl -X PATCH http://localhost:8080/api/salons/42 \
-  -H "Content-Type: application/json" \
-  -d '{"phone": "+48 123 456 789", "priceRange": "€€"}'
+curl https://warsaw-beauty-salon-explorer-production.up.railway.app/api/stats
 ```
 
 ---
 
 ## Testing
 
-Integration tests cover the core API behaviour using MockMvc with an isolated in-memory database (separate `test` profile, `@BeforeEach` setup):
+The backend contains integration tests covering:
 
-```
-✔ GET /api/salons — returns all salons and supports district filter
-✔ GET /api/salons/{id} — returns full salon details
-✔ PATCH /api/salons/{id} — persists field updates
-✔ GET /api/salons/{id} (missing) — returns 404 with structured error body
-```
+* salon listing
+* district filtering
+* salon details
+* record updates
+* error handling
 
-Run:
+Run tests:
+
 ```bash
-cd backend && mvn test
+cd backend
+mvn test
 ```
 
 ---
 
 ## Data Quality
 
-This project prioritizes **correctness over completeness**. Fields unavailable in OpenStreetMap are stored empty rather than populated with potentially inaccurate data.
+The project prioritizes correctness over completeness.
 
-| Field | Coverage | Notes |
-|-------|----------|-------|
-| Name | 100% | Required — filtered during collection |
-| District | 100% | Mapped via coordinates + OSM admin boundaries |
-| Services | 100% | Inferred from shop type tags |
-| Coordinates | 100% | Required — filtered during collection |
-| Phone | ~22% (602 / 2 716) | OSM community contribution varies by area |
-| Website | ~14% (391 / 2 716) | Expected low coverage for OSM beauty data |
-| Rating / Reviews | — | Not in OSM; planned via Google Places enrichment |
-| Price range | — | Not in OSM; editable via UI |
+Missing information is never fabricated.
 
-Low phone/website coverage is an honest reflection of the data source, not a processing gap.
+Current coverage:
 
----
-
-## Why OpenStreetMap?
-
-- **Free and open** — no API key, no rate limits for reasonable use
-- **Real data** — community-verified, not algorithmically generated
-- **Full coverage** — Warsaw is well-mapped; all 18 districts returned results
-- **Coordinates included** — enables map display and geographic filtering out of the box
-- **Scalable** — same pipeline works for any Polish city with a one-line query change
+| Field       | Coverage           |
+| ----------- | ------------------ |
+| Name        | 100%               |
+| Coordinates | 100%               |
+| District    | 100%               |
+| Services    | 100%               |
+| Phone       | ~22%               |
+| Website     | ~14%               |
+| Rating      | Planned enrichment |
+| Reviews     | Planned enrichment |
+| Price Level | Planned enrichment |
 
 ---
 
-## Scaling to All of Poland
+## Production Deployment
 
-Current query targets Warsaw:
-```
-area["name"="Warszawa"]["admin_level"="6"]
+| Component | Platform |
+| --------- | -------- |
+| Frontend  | Vercel   |
+| Backend   | Railway  |
+
+Deployment pipeline:
+
+```text
+GitHub
+│
+├── Vercel
+│   └── Frontend
+│
+└── Railway
+    └── Backend
 ```
 
-Replacing with:
-```
-area["name"="Polska"]["admin_level"="2"]
-```
-
-returns ~20 000+ salons nationally. Scaling would require:
-- PostgreSQL + PostGIS for geospatial queries
-- Cursor-based pagination in the API
-- Batch processing in the Python pipeline
-- Scheduled weekly refresh via GitHub Actions cron or a dedicated job
+Both services redeploy automatically after updates to the main branch.
 
 ---
 
-## In Progress: Google Places Enrichment
+## Google Places Enrichment (Planned)
 
-Google Places API key is obtained and integration is in active development. The current OSM dataset is strong on location data but sparse on ratings, reviews, and photos — Google Places fills exactly that gap.
+The next project phase is enrichment through Google Places API.
 
-**Enrichment pipeline:**
+Google Cloud project and API access are already configured.
 
-```
-OSM Salon (name + coordinates)
-           │
-           ▼
-Google Places Text Search
-"{name} Warsaw {district}"
-           │
-           ▼
- Confidence scoring per match
- ├── Geographic distance < 200m  → +0.5
- ├── Name contains / is contained → +0.3
- └── Name exact match (lowercase) → +0.2
-           │
-     Score ≥ 0.7?
-     │             │
-    Yes            No
-     │             │
-     ▼             ▼
-  Merge fields   Keep OSM record as-is
-  - rating
-  - userRatingCount
-  - nationalPhoneNumber
-  - websiteUri
-  - priceLevel (maps to €/€€/€€€)
-  - photos (first thumbnail URL)
-  - dataSource: "osm+google"
-```
+The enrichment process will match OpenStreetMap businesses against Google Places results using:
 
-Matching uses geographic proximity as the primary signal — name similarity alone is unreliable for salons (many share generic names). Only records where the Places result is within ~200m of the OSM coordinates are considered for merge.
+* name similarity
+* geographic distance
+* district validation
 
-Expected outcome: ratings and review counts for the majority of the 2 716 records currently showing `—`.
+Planned additional fields:
+
+* ratings
+* review counts
+* business websites
+* phone numbers
+* photos
+* price levels
+
+This will significantly improve data completeness while preserving OpenStreetMap as the primary source of truth.
 
 ---
 
-## What I Would Build Next
+## Future Improvements
 
-### CI/CD via GitHub Actions
+### Marker Clustering
 
-Automated pipeline on every push and pull request:
+Replace individual Leaflet markers with clustering to support displaying all 2,716 salons simultaneously without performance degradation.
 
-```yaml
-# .github/workflows/ci.yml
-on: [push, pull_request]
+### PostgreSQL + PostGIS
 
-jobs:
-  backend:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with: { java-version: '21', distribution: 'temurin' }
-      - run: cd backend && mvn test --no-transfer-progress
+Migration from H2 to PostgreSQL for:
 
-  frontend:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: '18' }
-      - run: cd frontend && npm ci && npm run build
+* persistent storage
+* geospatial queries
+* scalability
+
+### Nearby Search
+
+Support:
+
+```http
+GET /api/salons/nearby
 ```
 
-CD extension: on merge to `main`, build and push Docker image to GitHub Container Registry, then trigger a deploy hook on Railway/Render. The whole chain — push code → tests pass → live in ~3 minutes.
+using browser geolocation and radius-based filtering.
 
----
+### Automated Refresh Pipeline
 
-### "Salons Near Me" Geospatial Search
+Scheduled data refreshes using GitHub Actions and OpenStreetMap updates.
 
-Replace H2 with PostgreSQL + PostGIS and add a radius endpoint:
+### CI/CD
 
-```sql
--- Salons within 1 km of a point
-SELECT * FROM salons
-WHERE ST_DWithin(
-  ST_MakePoint(longitude, latitude)::geography,
-  ST_MakePoint(:lon, :lat)::geography,
-  1000  -- metres
-)
-ORDER BY ST_Distance(...);
-```
+GitHub Actions pipeline:
 
-Frontend: browser geolocation API → `GET /api/salons/nearby?lat=52.22&lon=21.01&radius=1000`. Pins on the map sorted by walking distance. This is the feature that makes a directory actually useful on mobile.
-
----
-
-### Automated Data Freshness
-
-Weekly cron job via GitHub Actions that re-runs the Python collection pipeline and opens a PR with the diff — new salons added, closed ones flagged. The team reviews and merges. No stale data, no manual work, full audit trail.
-
-```yaml
-on:
-  schedule:
-    - cron: '0 3 * * 1'  # every Monday at 3am
+```text
+Push
+ ↓
+Tests
+ ↓
+Build
+ ↓
+Deploy
 ```
 
 ---
 
-### Marker Clustering on the Map
+## Author
 
-Currently the map renders up to 500 individual pins (configurable in `SalonMap.tsx`). With Leaflet.markercluster, all 2 716 salons can be shown simultaneously — clusters at low zoom, individual pins when zoomed in. One dependency, ~20 lines of code change, significantly better UX at city scale.
+Developed as part of the SumUp Warsaw Accelerator Program technical assignment.
 
----
+Built with:
 
-### Google Places Enrichment Pipeline
-
-Already in progress (see [In Progress](#in-progress-google-places-enrichment) section above). Implementation on the backend side: a Spring Batch job that processes salons in pages of 50, calls the Places API, applies the confidence scoring, and writes merged records back to the database. Adds ratings and review counts to the ~78% of records currently without them.
-
----
-
-### Production Deployment
-
-| Component | Target | Notes |
-|-----------|--------|-------|
-| Frontend | Vercel | Auto-deploy from GitHub, CDN, free tier |
-| Backend | Railway | Dockerfile-based, free tier, env vars UI |
-| Database | PostgreSQL (Railway) | Persistent, replaces H2 |
-
-Docker Compose is already in place — Railway reads it directly.
-
-
+* Java
+* Spring Boot
+* React
+* TypeScript
+* Leaflet
+* Docker
+* Railway
+* Vercel
+* OpenStreetMap
