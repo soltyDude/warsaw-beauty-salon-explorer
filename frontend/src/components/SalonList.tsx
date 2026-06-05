@@ -50,7 +50,11 @@ export default function SalonList({ salons, selectedId, onSelect }: SalonListPro
                 <Star size={15} aria-hidden="true" />
                 {displayRating(salon.rating)}
               </span>
-              <span>{displayValue(salon.priceRange)}</span>
+              <span>
+                {salon.reviewsCount
+                  ? `${salon.reviewsCount} reviews`
+                  : "No reviews"}
+              </span>
             </span>
           </button>
         </li>
