@@ -1,3 +1,4 @@
+![CI](https://github.com/soltyDude/warsaw-beauty-salon-explorer/actions/workflows/ci.yml/badge.svg)
 # Warsaw Beauty Salon Explorer
 
 ## Live Demo
