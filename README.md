@@ -1,4 +1,5 @@
 ![CI](https://github.com/soltyDude/warsaw-beauty-salon-explorer/actions/workflows/ci.yml/badge.svg)
+
 # Warsaw Beauty Salon Explorer
 
 ## Live Demo
@@ -13,25 +14,9 @@ Backend API: https://warsaw-beauty-salon-explorer-production.up.railway.app/api/
 
 Warsaw Beauty Salon Explorer is a full-stack application for discovering beauty salons, hairdressers, barbershops, nail studios, and wellness services across Warsaw.
 
-The project was built as a technical assignment for the SumUp Warsaw Accelerator Program and demonstrates the complete data engineering and software development pipeline:
+The project was built as a technical assignment for the SumUp Warsaw Accelerator Program and demonstrates the complete data engineering and software development pipeline.
 
-```text
-Data Collection
-      ↓
-Data Cleaning
-      ↓
-REST API
-      ↓
-Frontend Application
-      ↓
-Interactive Map
-      ↓
-Dockerized Deployment
-      ↓
-Cloud Hosting
-```
-
-The application currently contains 2,716 real businesses collected from OpenStreetMap and distributed across all 18 Warsaw districts.
+The application currently contains **2,716 real businesses** collected from OpenStreetMap and distributed across all 18 Warsaw districts.
 
 ---
 
@@ -39,58 +24,61 @@ The application currently contains 2,716 real businesses collected from OpenStre
 
 ### Data Collection & Processing
 
-* OpenStreetMap + Overpass API data source
-* 2,716 real beauty-related businesses
-* Geographic district assignment
-* Data normalization and validation
-* Duplicate detection and cleanup
-* Automated import pipeline written in Python
+- OpenStreetMap + Overpass API data source
+- 2,716 real beauty-related businesses
+- Geographic district assignment
+- Data normalization and validation
+- Duplicate detection and cleanup
+- Automated import pipeline written in Python
 
 ### Backend API
 
-* Spring Boot 3 + Java 21
-* RESTful architecture
-* Salon listing endpoint
-* Filtering by district
-* Filtering by service type
-* Salon detail endpoint
-* Statistics endpoint
-* PATCH updates with persistence
-* Integration tests using MockMvc
+- Spring Boot 3 + Java 21
+- RESTful architecture
+- Salon listing endpoint
+- Filtering by district
+- Filtering by service type
+- Salon detail endpoint
+- Statistics endpoint
+- PATCH updates with persistence
+- Integration tests using MockMvc
 
 ### Frontend
 
-* React 18 + TypeScript
-* Search by salon name
-* District filtering
-* Service filtering
-* Sorting options
-* Statistics dashboard
-* Editable salon details
-* Responsive layout
-* Interactive Leaflet map
+- React 18 + TypeScript
+- Search by salon name
+- District filtering
+- Service filtering
+- Sorting options
+- Statistics dashboard
+- Editable salon details
+- Responsive layout
+- Interactive Leaflet map
 
 ### Infrastructure
 
-* Dockerized backend
-* Dockerized frontend
-* Docker Compose support
-* GitHub repository
-* Railway deployment
-* Vercel deployment
-* Automatic cloud builds
+- Dockerized backend
+- Dockerized frontend
+- Docker Compose support
+- GitHub repository
+- GitHub Actions CI/CD
+- Automated backend testing
+- Automated frontend build validation
+- Railway deployment
+- Vercel deployment
+- Automatic cloud deployments
 
 ---
 
-## Live Dataset Statistics
+## Dataset Statistics
 
-| Metric              | Value   |
-| ------------------- | ------- |
-| Total salons        | 2,716   |
-| Districts covered   | 18 / 18 |
-| Phone numbers       | 602     |
-| Websites            | 391     |
-| Services classified | 2,716   |
+| Metric | Value |
+|----------|----------|
+| Total salons | 2,716 |
+| Districts covered | 18 / 18 |
+| Phone numbers | 602 |
+| Websites | 391 |
+| Services classified | 2,716 |
 
 ---
 
@@ -116,22 +104,21 @@ OpenStreetMap (Overpass API)
  Leaflet + OpenStreetMap
 ```
 
----
-
 ## Tech Stack
 
-| Layer           | Technology             |
-| --------------- | ---------------------- |
-| Backend         | Java 21, Spring Boot 3 |
-| Persistence     | H2 Database            |
-| Frontend        | React 18, TypeScript   |
-| Build Tool      | Maven                  |
-| Frontend Build  | Vite                   |
-| Maps            | Leaflet                |
-| Data Collection | Python                 |
-| Data Source     | OpenStreetMap          |
-| Deployment      | Railway + Vercel       |
-| Containers      | Docker, Docker Compose |
+| Layer | Technology |
+|---------|---------|
+| Backend | Java 21, Spring Boot 3 |
+| Persistence | H2 Database |
+| Frontend | React 18, TypeScript |
+| Build Tool | Maven |
+| Frontend Build | Vite |
+| Maps | Leaflet |
+| Data Collection | Python |
+| Data Source | OpenStreetMap |
+| Deployment | Railway + Vercel |
+| Containers | Docker, Docker Compose |
+| CI/CD | GitHub Actions |
 
 ---
 
@@ -155,8 +142,6 @@ Backend:
 ```text
 http://localhost:8080
 ```
-
----
 
 ### Without Docker
 
@@ -199,11 +184,12 @@ curl https://warsaw-beauty-salon-explorer-production.up.railway.app/api/stats
 
 The backend contains integration tests covering:
 
-* salon listing
-* district filtering
-* salon details
-* record updates
-* error handling
+- salon listing
+- district filtering
+- salon details
+- record updates
+- statistics endpoint
+- error handling
 
 Run tests:
 
@@ -214,36 +200,115 @@ mvn test
 
 ---
 
+## Continuous Integration & Deployment
+
+The project uses GitHub Actions to automatically validate and deploy every change.
+
+Pipeline:
+
+```text
+Push
+ ↓
+Backend Tests
+ ↓
+Frontend Build
+ ↓
+Deploy
+```
+
+Automated checks:
+
+- Spring Boot integration tests
+- Frontend production build validation
+- Pull Request verification
+
+Deployment targets:
+
+- Railway (Backend API)
+- Vercel (Frontend Application)
+
+Every push automatically triggers validation and deployment workflows.
+
+---
+
 ## Data Quality
 
 The project prioritizes correctness over completeness.
 
 Missing information is never fabricated.
 
-Current coverage:
+| Field | Coverage |
+|---------|---------|
+| Name | 100% |
+| Coordinates | 100% |
+| District | 100% |
+| Services | 100% |
+| Phone | ~22% |
+| Website | ~14% |
+| Rating | Google enrichment prototype |
+| Reviews | Google enrichment prototype |
+| Price Level | Future enhancement |
 
-| Field       | Coverage           |
-| ----------- | ------------------ |
-| Name        | 100%               |
-| Coordinates | 100%               |
-| District    | 100%               |
-| Services    | 100%               |
-| Phone       | ~22%               |
-| Website     | ~14%               |
-| Rating      | Planned enrichment |
-| Reviews     | Planned enrichment |
-| Price Level | Planned enrichment |
+---
+
+## Google Places Enrichment
+
+A Google Places API enrichment pipeline was implemented and successfully validated.
+
+The enrichment workflow:
+
+```text
+OpenStreetMap Dataset
+        ↓
+Google Places Search
+        ↓
+Coordinate Validation
+        ↓
+Candidate Scoring
+        ↓
+Data Enrichment
+```
+
+Matching criteria:
+
+- business name similarity
+- geographic proximity
+- district context
+- coordinate validation
+
+Additional attributes retrieved from Google Places:
+
+- ratings
+- review counts
+- websites
+- phone numbers
+- formatted addresses
+- business status
+
+### Pilot Run Results
+
+| Metric | Value |
+|---------|---------|
+| Salons processed | 20 |
+| Successful matches | 18 |
+| Match rate | 90% |
+
+The pilot run successfully demonstrated reliable entity matching and enrichment.
+
+Due to Google Places API billing limitations, the enrichment process was validated on a representative sample rather than executed for the entire dataset.
+
+The enrichment pipeline remains available and can be executed on the full dataset once API credits become available.
 
 ---
 
 ## Production Deployment
 
 | Component | Platform |
-| --------- | -------- |
-| Frontend  | Vercel   |
-| Backend   | Railway  |
+|---------|---------|
+| Frontend | Vercel |
+| Backend | Railway |
 
-Deployment pipeline:
+Deployment flow:
 
 ```text
 GitHub
@@ -259,31 +324,6 @@ Both services redeploy automatically after updates to the main branch.
 
 ---
 
-## Google Places Enrichment (Planned)
-
-The next project phase is enrichment through Google Places API.
-
-Google Cloud project and API access are already configured.
-
-The enrichment process will match OpenStreetMap businesses against Google Places results using:
-
-* name similarity
-* geographic distance
-* district validation
-
-Planned additional fields:
-
-* ratings
-* review counts
-* business websites
-* phone numbers
-* photos
-* price levels
-
-This will significantly improve data completeness while preserving OpenStreetMap as the primary source of truth.
-
----
-
 ## Future Improvements
 
 ### Marker Clustering
@@ -294,13 +334,11 @@ Replace individual Leaflet markers with clustering to support displaying all 2,7
 
 Migration from H2 to PostgreSQL for:
 
-* persistent storage
-* geospatial queries
-* scalability
+- persistent storage
+- geospatial queries
+- scalability
 
 ### Nearby Search
-
-Support:
 
 ```http
 GET /api/salons/nearby
@@ -308,23 +346,13 @@ GET /api/salons/nearby
 
 using browser geolocation and radius-based filtering.
 
-### Automated Refresh Pipeline
+### Automated Dataset Refresh
 
-Scheduled data refreshes using GitHub Actions and OpenStreetMap updates.
+Scheduled OpenStreetMap synchronization and automated data refresh workflows.
 
-### CI/CD
+### Full Google Places Enrichment
 
-GitHub Actions pipeline:
-
-```text
-Push
- ↓
-Tests
- ↓
-Build
- ↓
-Deploy
-```
+Execute enrichment against the complete dataset once production API credits become available.
 
 ---
 
@@ -334,12 +362,12 @@ Developed as part of the SumUp Warsaw Accelerator Program technical assignment.
 
 Built with:
 
-* Java
-* Spring Boot
-* React
-* TypeScript
-* Leaflet
-* Docker
-* Railway
-* Vercel
-* OpenStreetMap
+- Java
+- Spring Boot
+- React
+- TypeScript
+- Leaflet
+- Docker
+- Railway
+- Vercel
+- OpenStreetMap
